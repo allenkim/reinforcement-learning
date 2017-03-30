@@ -20,11 +20,11 @@ def heuristic(node):
             elif elt == 'Y':
                 num_yellow += 1
         num_r_y.append(num_red - num_yellow)
-    num_r_y[3] *= gauss(1.5,1)
-    num_r_y[2] *= gauss(1,1)
-    num_r_y[4] *= gauss(1,1)
-    num_r_y[1] *= gauss(0.5,1)
-    num_r_y[5] *= gauss(0.5,1)
+    num_r_y[3] *= gauss(0.3,1)
+    num_r_y[2] *= gauss(0.2,1)
+    num_r_y[4] *= gauss(0.2,1)
+    num_r_y[1] *= gauss(0.1,1)
+    num_r_y[5] *= gauss(0.1,1)
     num_r_y[0] *= gauss(0,1)
     num_r_y[6] *= gauss(0,1)
     return sum(num_r_y)
