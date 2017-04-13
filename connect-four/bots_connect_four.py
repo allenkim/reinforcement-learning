@@ -41,7 +41,7 @@ def alphabeta_bot(node, depth, alpha, beta, player):
     winner = node.check_winner()
     if depth == 0 or winner != '.':
         if bot_level == 0:
-            legal_c = node.legalColumns()
+            legal_c = node.legal_columns()
             if len(legal_c) > 0:
                 rand_idx = randint(0, len(legal_c) - 1)
                 return legal_c[rand_idx]
