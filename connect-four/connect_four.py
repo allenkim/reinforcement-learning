@@ -56,7 +56,7 @@ class ConnectFourGame:
         """Get the winner on the current board."""
         legal_cols = self.legal_columns()
         if len(legal_cols) <= 0:
-            return DRAW
+            return 'D'
 
         lines = (
             self.board, # columns

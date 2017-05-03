@@ -13,12 +13,12 @@ rows = env.game.rows
 cols = env.game.cols
 
 # hyperparameters
-H = 200 # number of hidden layer neurons
+H = 512 # number of hidden layer neurons
 batch_size = 100 # every how many episodes to do a param update?
 learning_rate = 1e-4
 gamma = 0.99 # discount factor for reward
 decay_rate = 0.99 # decay factor for RMSProp leaky sum of grad^2
-resume = False # resume from previous checkpoint?
+resume = True # resume from previous checkpoint?
 render = False
 
 # model initialization
@@ -101,7 +101,7 @@ while True:
 
     drs.append(reward) # record reward (has to be done after we call step() to get reward for previous action)
 
-    if reward != 0 and episode_number % 10 == 0: # Game has either +1 or -1 reward exactly when game ends.
+    if reward != 0 and episode_number % 10 == 0: # Game has either positive fraction or -1 reward exactly when game ends.
         print(('ep %d: game finished, reward: %f' % (episode_number, reward)) + 
               ('' if reward == -1 else ' !!!!!!!!') +
               (' - ILLEGAL MOVE' if observation == None else ''))
@@ -109,8 +109,6 @@ while True:
     if done: # an episode finished
         if render: env.render()
         
-        episode_number += 1
-
         # stack together all inputs, hidden states, action gradients, and rewards for this episode
         epx = np.vstack(xs)
         eph = np.vstack(hs)
@@ -137,7 +135,8 @@ while True:
         running_reward = reward_sum if running_reward is None else running_reward * 0.999 + reward_sum * 0.001
         if episode_number % 10 == 0:
             print('episode reward total was %f. running mean: %f' % (reward_sum, running_reward))
-        if episode_number % 1000 == 0: pickle.dump(model, open('save.p', 'wb'))
+        if episode_number % 100 == 0: pickle.dump(model, open('save.p', 'wb'))
         reward_sum = 0
+        episode_number += 1
         observation = env.reset() # reset env
 
