@@ -16,7 +16,7 @@ class ConnectFourGym:
     def reset(self):
         # AI is always RED and yellow or red goes first randomly
         self.first_player = 'R' if random() < 0.5 else 'Y'
-        self.max_level = 4
+        self.max_level = 5
         self.opp_level = randint(0,self.max_level) # the AI that will face the bot
         self.game = ConnectFourGame()
         if self.first_player == 'Y':
