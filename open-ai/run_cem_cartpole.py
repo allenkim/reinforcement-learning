@@ -19,8 +19,10 @@ def theta_rollout(env, theta, num_steps, render = False):
     action = observation_to_action(observation, theta)
     observation, reward, done, _ = env.step(action)
     total_rewards += reward
-    if render: env.render()
-    if done: break
+    if render: 
+        env.render()
+    if done and not render: 
+        break
   return total_rewards, t
 
 MAX_EPISODES = 10000
@@ -42,7 +44,7 @@ for i_episode in range(MAX_EPISODES):
   top_theta = theta_sample[top_idx]
   theta_mean = top_theta.mean(axis = 0)
   # theta_std = top_theta.std(axis = 0)
-  total_rewards, t = theta_rollout(env, theta_mean, MAX_STEPS, render = False)
+  total_rewards, t = theta_rollout(env, theta_mean, MAX_STEPS, render = True)
 
   episode_history.append(total_rewards)
   mean_rewards = np.mean(episode_history)

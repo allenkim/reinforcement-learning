@@ -70,7 +70,7 @@ for i_episode in range(MAX_EPISODES):
     w2_top_model = np.array([w2 for w1,w2 in top_model])
     model_mean['W2'] = w2_top_model.mean(axis = 0)
     # model_std['W2'] = w2_top_model.std(axis = 0)
-    total_rewards, t = model_rollout(env, model_mean, MAX_STEPS, render = False)
+    total_rewards, t = model_rollout(env, model_mean, MAX_STEPS, render = True)
     # print(model_std['W1'])
     # print(model_std['W2'])
 
