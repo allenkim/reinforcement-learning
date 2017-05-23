@@ -2,7 +2,7 @@
 from itertools import groupby, chain
 from random import randint
 
-from bots_connect_four import alphabeta_move
+from bots_connect_four import alphabeta_move, pg_move
 
 def diagonals_pos (matrix, cols, rows):
     """Get positive diagonals, going from bottom-left to top-right."""
@@ -94,9 +94,9 @@ if __name__ == '__main__':
             continue
 
     while True:
-        bot_level = input('Bot Level (0 to 5): ')
+        bot_level = input('Bot Level (-1 to 5): ')
         try:
-            if 0 <= int(bot_level) <= 5:
+            if -1 <= int(bot_level) <= 5:
                 bot_level = int(bot_level)
                 print()
                 break
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
             g.insert(col, turn)
         else:
-            col = alphabeta_move(g, turn, bot_level)
+            col = pg_move(g) if bot_level == -1 else alphabeta_move(g, turn, bot_level)
             g.insert(col, turn)
 
         winner = g.check_winner()
