@@ -18,7 +18,7 @@ batch_size = 100 # every how many episodes to do a param update?
 learning_rate = 1e-4
 gamma = 0.99 # discount factor for reward
 decay_rate = 0.99 # decay factor for RMSProp leaky sum of grad^2
-resume = True # resume from previous checkpoint?
+resume = False # resume from previous checkpoint?
 render = False
 
 # model initialization
@@ -118,6 +118,10 @@ while True:
 
         # compute the discounted reward backwards through time
         discounted_epr = discount_rewards(epr)
+        
+        # standardize the rewards to be unit normal (helps control the gradient estimator variance)
+        # discounted_epr -= np.mean(discounted_epr)
+        # discounted_epr /= np.std(discounted_epr)
 
         epdlogp *= discounted_epr # modulate the gradient with advantage (PG magic happens right here.)
         grad = policy_backward(eph, epx, epdlogp)
